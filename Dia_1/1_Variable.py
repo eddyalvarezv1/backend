@@ -1,10 +1,8 @@
-#Tipos de datos de variables primitivas
-
-#String
-nombre = "Eddy"
-direccion = 'Las lechuzas "512'
-
-#Cuando queremos guardar un texto muy largo que ademas puede tener saltos de linea
+# Tipos de datos de variables primitivas
+# String
+nombre = "Farit o'Conner"
+direccion = 'Las Lechuzas "512'
+# Cuando queremos guardar un texto muy largo que ademas puede tener saltos de linea
 enunciado = '''Hola
 como estas
         Te extraño
@@ -12,7 +10,7 @@ Espero verte pronto,
 
 Saludos
 
-Eduardo '''
+Eduardo'''
 
 otro_enunciado = """Hola
 como estas
@@ -23,11 +21,12 @@ Saludos
 
 Eduardo"""
 
-#Int
+# Int
 edad = 32
-
-#Boolean
+# Boolean
 casado = True
-
-#Float
+# Float
 estatura = 1.82
+
+print(otro_enunciado)
+print(100)
