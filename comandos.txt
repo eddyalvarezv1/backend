@@ -2,7 +2,11 @@ flask db init                > poder inicializar mi proyecto de flask con migrac
 adicionalmente se puede poner la opcion --app NOMBRE_ARCHIVO:NOMBRE_INSTANCIA > si el NOMBRE_ARCHIVO se llama app.py entonces estamos aobligados a poner esta opcion ya que la linea de comandos de flask no lo encontrará.
 
 
-flask db migrate -m "NOMBRE_MIGRACIO" > visualizará los cambios que hemos hecho con la bd y creara la migracion correspondiente
+flask db migrate -m "NOMBRE_MIGRACION" > visualizará los cambios que hemos hecho con la bd y creara la migracion correspondiente
+flask db upgrade                > Ejecuta las migraciones que no estan en la base de datos adicion al a ello si solo queremo ver el SQL 
+
+flask db downgrade              > 
+
 
 pip list                        > Listará las librerias instaladas en la terminal
 pip freeze                      > Mostrará las librerias instaladas con su version en el formato LIBERIA==version
