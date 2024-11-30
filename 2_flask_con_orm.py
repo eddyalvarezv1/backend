@@ -6,6 +6,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow.exceptions import ValidationError
 
 
+
 app= Flask(__name__)
 
 # Aca agregamos la variable de conexion a  nuestra base de datos
