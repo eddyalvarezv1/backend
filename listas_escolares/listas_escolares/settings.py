@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Ahora agregamos las aplicaciones creadas manualmente
-    'gestion'
+    'gestion',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
