@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Usuario {
+  // @id > sirve para indicar que la columna es llave primaria
+  // @default > indica cual sera su valor por defecto
+  // @db. > Sirve para indicar el tipo de dato en especifico que utilizaremos para la bd
+  // Tipo_de_dato? > Indicara que la columna puede aceptar valores nulos
+  // @map > Sirve para indicar como se llamara esa propiedad en la base de datos, sino se le indica su valor sera igual que el nombre de la propiedad
+  // @updatedAt() > Indica que esa columna obtendra el valor de la hora y fecha actual del servidor cuando se realice un cambio en el registro
+  // @unique > no se podra repetir el valor de la celda de nuevo en otro registro
+  // @default(VALOR) > valor por defecto que usara si no se define al momento de crear 
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  password    String
+  tipoUsuario ClasesDeUsuario? @default(USUARIO) @map("tipo_usuario")
+  nombre      String?
+  apellido    String
+
+  // Columnas de auditoria
+
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt() @map("updated_at")
+
+  // Para configuraciones de la tabla se usa dos @@
+  @@map("usuarios")
+}
+
+
+model Imagen {
+  id        Int        @id @default(autoincrement())
+  Path      String
+  Extension String
+  Nombre    String
+  
+  // Columnas de auditoria
+
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt() @map("updated_at")
+
+  // Relacion de uno a muchos
+  // Si queremos que la relacion sea de 1-1 entonces no seria un arreglo 
+  equipo Equipo[]
+
+  @@map("imagenes")
+}
+
+model Equipo {
+  id                      Int        @id @default(autoincrement())
+  nombre                  String
+  estadio                 String?
+ 
+ // Columnas de auditoria
+
+  created_at              DateTime @default(now()) @map("created_at")
+  updated_at              DateTime @updatedAt() @map("updated_at")
+
+  // Relaciones
+  imagenId                Int     @unique @map("imagen_id")
+  imagen                  Imagen  @relation(fields: [imagenId], references: [id])
+
+  // Cuando tenemos dos o mas relaciones con la misma tabla entonces nos vemos obligados a colocar el nombre de la relacion para que primsa pueda entender a que relacion debe ir determinado registro
+  partidoEquipoLocal      Partido[] @relation(name: "equipoLocal")
+  partidoEquipoVisitante  Partido[] @relation(name: "equipoVisitante")
+
+  @@map("equipos")
+}
+
+model Partido {
+  id                    Int       @id @default(autoincrement())
+  fecha                 DateTime  @db.Date
+  hora                  DateTime  @db.Time() // Si queremos usar un tipo de dato en especifico y no el generico podemos hacerlo mediante la propiedad @db.
+  scoreEquipoLocal      Int?      @map("score_equipo_local")
+  scoreEquipoVisitante  Int?      @map("score_equipo_visitante")
+
+  // Columnas de auditoria
+
+  created_at            DateTime @default(now()) @map("created_at")
+  updated_at            DateTime @updatedAt() @map("updated_at")  
+
+  equipoLocalId         Int       @map("equipo_local_id")
+  equipoLocal           Equipo    @relation(fields: [equipoLocalId], references: [id], name: "equipoLocal")
+  equipoVisitanteId     Int       @map("equipo_visitante_id")
+  equipoVisitante       Equipo    @relation(fields: [equipoVisitanteId], references: [id], name: "equipoVisitante")
+
+  @@map("partidos")
+
+}
+
+enum ClasesDeUsuario {
+  ADMIN
+  USUARIO
+  MODERADOR
+}
