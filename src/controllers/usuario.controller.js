@@ -70,6 +70,10 @@ export const login = async (req, res) => {
 };
 
 export const actualizarUsuario = async (req, res) => {
+    console.log()
+    // Actualizar mi usuario
+    // Crear un serializador para poder recibir el nombre o apellido
+
     return res.json({
         message: "Usuario actualizado exitosamente",
     });

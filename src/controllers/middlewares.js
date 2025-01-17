@@ -30,5 +30,7 @@ export const validarUsuario = async (req, res, next) => {
         where: { id: payload.usuarioId },
     });
 
+    // 
+    req.user = usuarioEncontrado;
     next();
 };
